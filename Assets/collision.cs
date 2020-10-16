@@ -8,6 +8,7 @@ public class collision : MonoBehaviour
 {
     public gravity grav;
     static public int num;
+    public GameObject sol;
 
     private float coefficientConcervation = 0.8f;
 
@@ -22,8 +23,17 @@ public class collision : MonoBehaviour
         Debug.Log(num);
     }
 
+    void Update()
+    {
+        if(transform.position.y <= 0)
+        {
+            grav.speed.y = -grav.speed.y;
+        }
+    }
+
     private void OnCollisionEnter(Collision other)
     {
+
         Vector3 current = grav.speed;
         Vector3 normale = other.contacts[0].normal;
         Vector3 rebound = coefficientConcervation * Vector3.Reflect(current, normale);
