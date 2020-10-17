@@ -21,9 +21,7 @@ public class canon : MonoBehaviour
     {
         obj = cube;
         forceV = 0;
-        angleV = 0;
-        obj.GetComponent<gravity>().speed = new Vector3(0, 25 * forceV * Mathf.Cos((angleV * Mathf.PI) / 180), 25 * forceV * Mathf.Sin((angleV * Mathf.PI) / 180));
-        target = new Vector3(0, 15, 15);
+        angleV = 180;
     }
 
     // Update is called once per frame
@@ -45,9 +43,9 @@ public class canon : MonoBehaviour
         forceV = newValue;
     }
 
-    public void angleOnChange(int newValue)
+    public void angleOnChange(System.Single newValue)
     {
-        angleV = newValue;
+        angleV = (int) newValue;
     }
 
     public void formOnChange(int val)
