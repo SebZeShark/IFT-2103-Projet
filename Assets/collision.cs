@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using myGravity;
 
@@ -8,9 +9,10 @@ public class collision : MonoBehaviour
 {
     public gravity grav;
     static public int num;
-    public GameObject sol;
 
     private float coefficientConcervation = 0.8f;
+    private RaycastHit hit;
+    private Ray ray;
 
     // Start is called before the first frame update
     void Awake()
@@ -25,18 +27,17 @@ public class collision : MonoBehaviour
 
     void Update()
     {
-        if(transform.position.y <= 0)
-        {
-            grav.speed.y = -grav.speed.y;
+        ray = new Ray(transform.position, grav.speed);
+        if(Physics.Raycast(ray, out hit, 0.5f)){
+            Vector3 current = grav.speed;
+            Vector3 normale = hit.normal;
+            Vector3 rebound = coefficientConcervation * Vector3.Reflect(current, normale);
+            grav.speed = rebound;
         }
     }
 
     private void OnCollisionEnter(Collision other)
     {
 
-        Vector3 current = grav.speed;
-        Vector3 normale = other.contacts[0].normal;
-        Vector3 rebound = coefficientConcervation * Vector3.Reflect(current, normale);
-        grav.speed = rebound;
     }
 }
