@@ -11,12 +11,14 @@ public class canon : MonoBehaviour
     public Slider force;
     public Dropdown dd;
     GameObject obj;
+    private Vector3 target;
     
     // Start is called before the first frame update
     void Start()
     {
         obj = cube;
         obj.GetComponent<gravity>().speed = new Vector3(0, 25 * 0, 25 * 0);
+        target = new Vector3(0, 15, 15);
     }
 
     // Update is called once per frame
@@ -27,15 +29,14 @@ public class canon : MonoBehaviour
             if (collision.num < 10)
             {
                 Instantiate(obj, transform.position, Quaternion.identity);
-
+                obj.GetComponent<gravity>().speed = target;
             }
         }
     }
 
     public void onChange(System.Single newValue)
     {
-
-        obj.GetComponent<gravity>().speed = new Vector3(0, 25 * newValue, 25 * newValue);
+        target = new Vector3(0, 25 * newValue, 25 * newValue);
     }
 
     public void formOnChange(int val)
