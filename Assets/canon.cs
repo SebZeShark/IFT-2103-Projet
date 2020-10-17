@@ -15,8 +15,10 @@ public class canon : MonoBehaviour
     public Text forceText;
     public Text angleText;
     public Text formeText;
+    public Text joueurText;
     float forceV;
     int angleV;
+    int joueurActif;
     GameObject obj;
     private Vector3 target;
     
@@ -29,6 +31,8 @@ public class canon : MonoBehaviour
         forceText.text = (Mathf.FloorToInt(forceV * 100)).ToString();
         angleText.text = angleV.ToString();
         formeText.text = "Cube";
+        joueurActif = 1;
+        joueurText.text = joueurActif.ToString();
     }
 
     // Update is called once per frame
@@ -73,9 +77,11 @@ public class canon : MonoBehaviour
 
     public void tirerOnClick()
     {
-        if (collision.num < 10)
+        if (collision.num < 1)
         {
             Instantiate(obj, transform.position + new Vector3(0, 0.5f, 0.5f), Quaternion.identity);
+            joueurActif = 1 + (joueurActif % 2);
+            joueurText.text = joueurActif.ToString();
         }
     }
 }
