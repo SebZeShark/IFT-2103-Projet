@@ -16,6 +16,9 @@ public class canon : MonoBehaviour
     public Text angleText;
     public Text formeText;
     public Text joueurText;
+    public GameObject cible;
+    public Text winText;
+    GameObject c;
     float forceV;
     int angleV;
     int joueurActif;
@@ -26,6 +29,7 @@ public class canon : MonoBehaviour
     void Start()
     {
         obj = cube;
+        c = obj;
         forceV = 0.05f;
         angleV = 0;
         forceText.text = (Mathf.FloorToInt(forceV * 100)).ToString();
@@ -33,6 +37,7 @@ public class canon : MonoBehaviour
         formeText.text = "Cube";
         joueurActif = 1;
         joueurText.text = joueurActif.ToString();
+        winText.text = "";
     }
 
     // Update is called once per frame
@@ -41,6 +46,13 @@ public class canon : MonoBehaviour
         obj.GetComponent<gravity>().speed = new Vector3(0, 
             25 * forceV * Mathf.Sin((angleV * Mathf.PI) /180),
             25 * forceV * Mathf.Cos((angleV * Mathf.PI) / 180));
+        if (Vector3.Distance(c.transform.position, cible.transform.position) < 1)
+        {
+            c = cube;
+            winText.text = "Le joueur " + joueurActif + " gagne!";
+            Time.timeScale = 0;
+            Application.Quit();
+        }
     }
 
     public void onChange(System.Single newValue)
@@ -79,9 +91,20 @@ public class canon : MonoBehaviour
     {
         if (collision.num < 1)
         {
-            Instantiate(obj, transform.position + new Vector3(0, 0.5f, 0.5f), Quaternion.identity);
-            joueurActif = 1 + (joueurActif % 2);
-            joueurText.text = joueurActif.ToString();
+            c = Instantiate(obj, transform.position + new Vector3(0, 0.5f, 0.5f), Quaternion.identity);
+
+            if (tirer != null)
+                tirer.interactable = false;
         }
+    }
+
+    public void OnDestroy()
+    {
+        c = cube;
+        if(tirer != null)
+            tirer.interactable = true;
+        joueurActif = 1 + (joueurActif % 2);
+        if(joueurText != null)
+            joueurText.text = joueurActif.ToString();
     }
 }

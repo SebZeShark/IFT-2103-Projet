@@ -65,7 +65,6 @@
     <Compile Include="Assets\Lifespan.cs" />
     <Compile Include="Assets\canon.cs" />
     <Compile Include="Assets\collision.cs" />
-    <Compile Include="Assets\gagner.cs" />
     <Compile Include="Assets\gravity.cs" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
